@@ -40,16 +40,12 @@ A collection of repositories forming a CNCF-aligned, bare-metal Kubernetes platf
 ## Table of Contents
 
 [//]: # (REQUIRED)
-[//]: # (Delete as appropriate)
+[//]: # (Managed by TOCGEN)
 
-1. [Security](#security)
-1. [Background](#background)
-1. [Install](#install)
-1. [Usage](#usage)
-1. [Documentation](#documentation)
-1. [Repository Configuration](#repository-configuration)
-1. [Contributing](#contributing)
-1. [License](#license)
+[//]: # (TOCGEN_TABLE_OF_CONTENTS_START)
+
+
+[//]: # (TOCGEN_TABLE_OF_CONTENTS_END)
 
 ## Security
 [//]: # (OPTIONAL)
@@ -69,11 +65,11 @@ This repos serves at the hub for the others that configure all aspects of the cl
 
 | Repository                                                                                | Purpose                                             |
 |-------------------------------------------------------------------------------------------|-----------------------------------------------------|
-| [kubernetes-lab](https://github.com/evoteum/kubernetes-lab-docs)                          | Documentation, ADRs, portfolio index. You are here! |
-| [kubernetes-lab-bootstrap](https://github.com/evoteum/kubernetes-lab-bootstrap)           | Brings up the cluster (Ansible, Bash, Tinkerbell)   |
+| [kubernetes-lab](https://github.com/evoteum/kubernetes-lab)                               | Documentation, ADRs, portfolio index. You are here! |
+| [kubernetes-lab-bootstrap](https://github.com/evoteum/kubernetes-lab-bootstrap)           | Brings up the cluster (Ansible)                     |
 | [kubernetes-lab-infrastructure](https://github.com/evoteum/kubernetes-lab-infrastructure) | Long-lived infra (OpenTofu)                         |
 | [kubernetes-lab-config](https://github.com/evoteum/kubernetes-lab-config)                 | Argo CD GitOps configuration                        |
-| [kubernetes-lab-services](https://github.com/evoteum/kubernetes-lab-services)             | Workloads and family apps                           |
+| [kubernetes-lab-services](https://github.com/evoteum/kubernetes-lab-services)             | Workloads and operational apps                      |
 
 ## Install
 
@@ -94,6 +90,67 @@ Add your username and public SSH key to users.yaml then you can `kubectl` to you
 [//]: # (This should not be called "Extra Sections".)
 [//]: # (This is a space for ≥0 sections to be included,)
 [//]: # (each of which must have their own titles.)
+
+## Core Components of the Lab
+
+### Metal Lab
+
+The [kubernetes-lab-bootstrap](https://github.com/evoteum/kubernetes-lab-bootstrap) uses Ansible to build and maintain a
+highly available, multi-architecture kubernetes cluster. It runs kubeadm on Ubuntu, a combination that is widely used
+across the industry. It also provisions Cilium as the CNI and ArgoCD to handle the management of everything else from
+that point using GitOps. Configures ArgoCD to use the
+[kubernetes-lab-config](https://github.com/evoteum/kubernetes-lab-config) repository.
+
+Three playbooks are provided,
+- build: empty Ubuntu to HA Kubernetes
+- destroy: HA Kubernetes to empty Ubuntu
+- rebuild: HA Kubernetes to empty Ubuntu to HA Kubernetes
+
+Rebuild reliability has been validated repeatedly, so build and destroy to your hearts content. 
+
+[![](images/rack.jpg)](images/rack-large.png)
+
+### Drydock
+
+*[Learn more...](http://github.com/evoteum/drydock)*
+
+Many modern infrastructure automation tools struggle with,
+- mutable infrastructure: no guarantees that repeated deployments will be *exactly* the same.
+- idempotent-ish: tries to be idempotent, but gives you the freedom to stray from the path if you wish.
+- no takesies-backsies: rollbacks can be challenging.
+- drift: if someone or something does something outside of your code, it will not be actively detected.
+- operating system provisioning: It is generally assumed that you already have an operating system in place, but if you
+  have just purchased 3 new servers, or perhaps 300 new servers, installing an operating system on every single one is
+  a pain.
+
+[Drydock](http://github.com/evoteum/drydock) will solve this.
+
+We are building Drydock, a bootstrapping system that takes you from bare metal to a
+fully functioning, highly available kubernetes cluster with (almost) zero human interaction. You'll get a cloud native
+experience on anything from a few Raspberry Pi's to a data centre full of HPE Cray Supercomputing EX4000 nodes. 
+
+If you happen to have an HPE Cray Supercomputing EX4000 and are willing to let us test Drydock on it, that would be
+*amazing* lol
+
+### SunshineOS
+
+*[Learn more...](http://github.com/evoteum/SunshineOS)*
+
+
+To fully automate the user experience, [Drydock](http://github.com/evoteum/drydock) needs an initial discovery operating
+system that tells [Drydock](http://github.com/evoteum/drydock) all the information about the box it is running on. Named
+after the small but powerful [Sunshine](https://tugs.fandom.com/wiki/Sunshine) from
+[Tugs](https://en.wikipedia.org/wiki/Tugs_(TV_series)), SunshineOS will guide your machine into
+[Drydock](http://github.com/evoteum/drydock) so that it can become part of the Kubernetes fleet.
+
+### HerculesOS
+
+*[Learn more...](http://github.com/evoteum/HerculesOS)*
+
+
+Sticking with the Kubernetes maritime theme, and the [Tugs](https://en.wikipedia.org/wiki/Tugs_(TV_series)) fleet,
+Drydock will send in HerculesOS when it comes time to destroy the entire cluster, or a specific node in the cluster. He
+runs from RAM to ensure that nothing is left on the disk so that it is suitable for disposal or a clean rebuild. 
 
 ## Documentation
 
