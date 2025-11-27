@@ -44,6 +44,21 @@ A collection of repositories forming a CNCF-aligned, bare-metal Kubernetes platf
 
 [//]: # (TOCGEN_TABLE_OF_CONTENTS_START)
 
+- [Security](#security)
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Core Components of the Lab](#core-components-of-the-lab)
+    - [Metal Lab](#metal-lab)
+    - [Drydock](#drydock)
+    - [SunshineOS](#sunshineos)
+    - [HerculesOS](#herculesos)
+- [Documentation](#documentation)
+- [Repository Configuration](#repository-configuration)
+- [Contributing](#contributing)
+- [License](#license)
+    - [Code](#code)
+    - [Non-code content](#non-code-content)
 
 [//]: # (TOCGEN_TABLE_OF_CONTENTS_END)
 
