@@ -37,6 +37,8 @@ Our Kubernetes Lab
 
 A collection of repositories forming a CNCF-aligned, bare-metal Kubernetes platform.
 
+This repo serves as the hub for the others that configure all aspects of the lab clusters.
+
 ## Table of Contents
 
 [//]: # (REQUIRED)
@@ -72,11 +74,11 @@ The Kubernetes Lab is currently only available via VPN.
 [//]: # (OPTIONAL)
 [//]: # (Explain the motivation and abstract dependencies for this repo)
 
-The intention of this lab environment is to offer members the opportunity to experiment on a production-like Kubernetes
-cluster without the restrictions of a live production environment. This allows us to purposefully break things, trial
-new software, explore new structures and generally do stuff that is not "boring and dependable".
+The intention of this lab environment is to offer team members the opportunity to experiment on a production-like
+Kubernetes cluster without the restrictions of a live production environment. This allows us to purposefully break
+things, trial new software, explore new structures and generally do stuff that is not "boring and dependable".
 
-This repos serves at the hub for the others that configure all aspects of the cluster.
+These are the other repositories within the kubernetes-lab group.
 
 | Repository                                                                                | Purpose                                             |
 |-------------------------------------------------------------------------------------------|-----------------------------------------------------|
@@ -98,7 +100,7 @@ See [kubernetes-lab-bootstrap](https://github.com/evoteum/kubernetes-lab-bootstr
 [//]: # (REQUIRED)
 [//]: # (Explain what the thing does. Use screenshots and/or videos.)
 
-Add your username and public SSH key to users.yaml then you can `kubectl` to your hearts content.
+Add your username and public SSH key to users.yaml so that you can SSH to the boxes. Get a kubeconfig file to `kubectl`.
 
 [//]: # (Extra sections)
 [//]: # (OPTIONAL)
@@ -106,12 +108,21 @@ Add your username and public SSH key to users.yaml then you can `kubectl` to you
 [//]: # (This is a space for ≥0 sections to be included,)
 [//]: # (each of which must have their own titles.)
 
+## Clusters
+
+We operate two Kubernetes clusters on our metal.
+
+| Environment  | Description                                                                                |
+|--------------|--------------------------------------------------------------------------------------------|
+| "production" | Production-ish. Stays up most of the time so that we can run experiments using Kubernetes. |
+| development  | Frequently gets rebuilt. Allows us to build *for* Kubernetes.                              |
+
 ## Core Components of the Lab
 
 ### Metal Lab
 
 The [kubernetes-lab-bootstrap](https://github.com/evoteum/kubernetes-lab-bootstrap) uses Ansible to build and maintain a
-highly available, multi-architecture kubernetes cluster. It runs kubeadm on Ubuntu, a combination that is widely used
+highly available, multi-architecture Kubernetes cluster. It runs kubeadm on Ubuntu, a combination that is widely used
 across the industry. It also provisions Cilium as the CNI and ArgoCD to handle the management of everything else from
 that point using GitOps. Configures ArgoCD to use the
 [kubernetes-lab-config](https://github.com/evoteum/kubernetes-lab-config) repository.
@@ -124,6 +135,26 @@ Three playbooks are provided,
 Rebuild reliability has been validated repeatedly, so build and destroy to your hearts content. 
 
 [![](images/rack.jpg)](images/rack-large.png)
+
+You will note that, as much as possible, we follow ANSI/TIA/EIA-606 Cable Colour Coding standards, because this,
+- improves debug-ability. We avoid the rainbow server room of doom.
+- reduced cognitive load by removing the need to learn an internal way of working.
+
+Although this standard is not specifically for patch cables, it is the closest available standard to prevent us from
+[927ing](https://xkcd.com/927/).
+
+Our key rack ethernet colours are,
+
+| Colour | Description                                     |
+|--------|-------------------------------------------------|
+| Green  | Our side of the WAN                             |
+| Purple | Common equipment; WiFi Access Points, Computers |
+| Yellow | Security                                        |
+| Blue   | Horizontal cabling, wall sockets                |
+
+You have, no doubt, already shouted that, "the Kubernetes nodes are connected using *BLUE* cables!!!" In the spirit
+of the standard, this is incorrect, but we had blue cables available at the time. Soz. Progress is better than
+perfection! Nonetheless, fear not, we will acquire new purple cables forthwith.
 
 ### Drydock
 
@@ -138,10 +169,10 @@ Many modern infrastructure automation tools struggle with,
   have just purchased 3 new servers, or perhaps 300 new servers, installing an operating system on every single one is
   a pain.
 
-[Drydock](http://github.com/evoteum/drydock) will solve this.
+[Drydock](http://github.com/evoteum/drydock) aims to solve this.
 
 We are building Drydock, a bootstrapping system that takes you from bare metal to a
-fully functioning, highly available kubernetes cluster with (almost) zero human interaction. You'll get a cloud native
+fully functioning, highly available Kubernetes cluster with (almost) zero human interaction. You'll get a cloud native
 experience on anything from a few Raspberry Pi's to a data centre full of HPE Cray Supercomputing EX4000 nodes. 
 
 If you happen to have an HPE Cray Supercomputing EX4000 and are willing to let us test Drydock on it, that would be
