@@ -50,6 +50,7 @@ This repo serves as the hub for the others that configure all aspects of the lab
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+- [Clusters](#clusters)
 - [Core Components of the Lab](#core-components-of-the-lab)
     - [Metal Lab](#metal-lab)
     - [Drydock](#drydock)
