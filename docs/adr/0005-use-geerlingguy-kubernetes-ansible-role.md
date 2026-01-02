@@ -4,7 +4,7 @@ Date: 2025-11-07
 
 ## Status
 
-Accepted
+Superceded by [8. Define Bespoke Ansible Roles for Kubernetes Cluster](0008-define-bespoke-ansible-roles-for-kubernetes-cluster.md)
 
 ## Context
 

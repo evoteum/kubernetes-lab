@@ -4,7 +4,7 @@ Date: 2025-11-03
 
 ## Status
 
-Accepted
+Superceded by [9. Build Kubernetes Cluster in Ansible](0009-build-kubernetes-cluster-in-ansible.md)
 
 ## Context
 
